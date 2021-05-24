@@ -1,7 +1,8 @@
 import Dashboard from "./views/Dashboard.js";
-import Posts from "./views/Posts.js";
-import PostView from "./views/PostView.js";
-import Settings from "./views/Settings.js";
+import Items from "./views/Items.js";
+import Login from "./views/Login.js";
+import Receipts from "./views/Receipts.js";
+import Credits from "./views/Credits.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -23,9 +24,9 @@ const router = async () => {
     const routes = [
         { path: "/", view: Dashboard },
         { path: "/login", view: Login },
-        { path: "/posts/:id", view: PostView },
-        { path: "/settings", view: Settings },
-        { path: "/items/:id", view: PostView }
+        { path: "/receipts", view: Receipts },
+        { path: "/credits", view: Credits },
+        { path: "/items", view: Items }
     ];
 
     // Test each route for potential match
@@ -67,3 +68,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     router();
 });
+

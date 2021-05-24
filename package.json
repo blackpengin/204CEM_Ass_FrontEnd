@@ -1,15 +1,26 @@
 {
-  "name": "spa",
+  "name": "204cem_ass_frontend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "main": "server.js",
   "dependencies": {
-    "express": "^4.17.1"
-  }
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "node": "^16.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackpengin/204CEM_Ass_FrontEnd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blackpengin/204CEM_Ass_FrontEnd/issues"
+  },
+  "homepage": "https://github.com/blackpengin/204CEM_Ass_FrontEnd#readme"
 }

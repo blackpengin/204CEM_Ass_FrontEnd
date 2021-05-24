@@ -8,6 +8,10 @@ export default class {
     }
 
     async getHtml() {
-        return "";
+        return `
+            < p > You are viewing post: ${this.postId}.</p >
+        `;
+
+
     }
 }
