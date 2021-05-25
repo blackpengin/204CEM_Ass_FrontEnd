@@ -9,7 +9,17 @@ export default class extends AbstractView {
     async getHtml() {
         return `
             <h1>Receipts</h1>
-            <p>Manage Receipts.</p>
+            <h2>Add Receipt</h2>
+            
+            <button onclick="POST_Receipt()">Add Receipt</button>
+
+            <h2>Receipt Record</h2>
+            <form>
+                <label for="searchReceipt">Search:</label>
+                <input type="text" id="searchReceipt" name="searchReceipt">
+                <button onclick="GET_Receipt()">Search Receipt</button><br><br>
+            </form>
+
         `;
     }
 }

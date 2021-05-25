@@ -18,12 +18,17 @@ export default class extends AbstractView {
                 <input type="text" id="itemPrice" name="itemPrice"><br><br>
             </form>
             <button onclick="POST_Item()">Add Item</button>
-            <h1></h1>
+            
+            <h2>Price List</h2>
+            <form>
+                <label for="searchItem">Search:</label>
+                <input type="text" id="searchItem" name="searchItem"><br><br>
+            </form>
             <ul>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul> 
+                <li>Coffee: $12</li>
+                <li>Tea: $6</li>
+                <li>Milk: $10</li>
+            </ul> 
         `;
     }
 }
