@@ -14,17 +14,20 @@ function POST_Item() {
             price: price
         })
     }).then((response) => {
-        return response.json();
-    }).then((jsonData) => {
-        console.log(jsonData);
+        if (response.status == 400) {
+            alert('Fail to add ' + name)
+        } else {
+            alert(name + ' Added.')
+        }
+        return response;
     }).catch((err) => {
         console.log('Error:', err);
     })
 }
 
 function PUT_Item() {
-    const name = document.getElementById("name").value;
-    const price = document.getElementById("price").value;
+    const name = document.getElementById("itemName").value;
+    const price = document.getElementById("itemPrice").value;
     let url = 'http://localhost:3000/api/items/' + name;
 
     fetch(url, {
@@ -38,16 +41,30 @@ function PUT_Item() {
             price: price
         })
     }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail to edit ' + name)
+        } else {
+            alert(name + ' edited to $' + price)
+        }
         return response.json();
-    }).then((jsonData) => {
-        console.log(jsonData);
     }).catch((err) => {
         console.log('Error:', err);
     })
 }
 
+function SearchItem() {
+    const itemList = document.getElementById('itemList')
+    itemList.innerHTML = '';
+    const name = document.getElementById("searchItem").value;
+    if (name == '') {
+        GET_AllItem()
+    } else {
+        GET_Item()
+    }
+}
+
 function GET_Item() {
-    const name = document.getElementById("email").value;
+    const name = document.getElementById("searchItem").value;
     let url = 'http://localhost:3000/api/items/' + name;
 
     fetch(url, {
@@ -57,16 +74,26 @@ function GET_Item() {
             'auth-token': GetCookie('auth-token')
         }
     }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail to search ' + name)
+        }
         return response.json();
     }).then((jsonData) => {
         console.log(jsonData);
+        const data = jsonData.name + ' : $' + jsonData.price;
+        var node = document.createElement('li');
+        node.appendChild(document.createTextNode(data));
+
+        document.querySelector('ul').appendChild(node);
+
+
     }).catch((err) => {
         console.log('Error:', err);
     })
 }
 
 function DELETE_Item() {
-    const name = document.getElementById("name").value;
+    const name = document.getElementById("itemName").value;
     let url = 'http://localhost:3000/api/items/' + name;
 
     fetch(url, {
@@ -76,6 +103,11 @@ function DELETE_Item() {
             'auth-token': GetCookie('auth-token')
         }
     }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail to delete ' + name)
+        } else {
+            alert(name + ' Deleted.')
+        }
         return response.json();
     }).then((jsonData) => {
         console.log(jsonData);
@@ -84,22 +116,61 @@ function DELETE_Item() {
     })
 }
 
-function GetCookie(name) {
-    // Split cookie string and get all individual name=value pairs in an array
-    var cookieArr = document.cookie.split(";");
-
-    // Loop through the array elements
-    for (var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-
-        /* Removing whitespace at the beginning of the cookie name
-        and compare it with the given string */
-        if (name == cookiePair[0].trim()) {
-            // Decode the cookie value and return
-            return decodeURIComponent(cookiePair[1]);
+function GET_AllItem() {
+    let url = 'http://localhost:3000/api/items';
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': GetCookie('auth-token')
         }
-    }
+    }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail.')
+        }
+        return response.json();
+    }).then((jsonData) => {
+        console.log(jsonData);
+        jsonData.forEach(element => {
+            const data = element.name + ' : $' + element.price;
+            var node = document.createElement('li');
+            node.appendChild(document.createTextNode(data));
+            document.querySelector('ul').appendChild(node);
+        });
 
-    // Return null if not found
-    return null;
+
+    }).catch((err) => {
+        console.log('Error:', err);
+    })
 }
+
+/*function MakeList(listData) {
+    // Establish the array which acts as a data source for the list
+    let data = listData,
+        // Make a container element for the list
+        listContainer = document.createElement('div'),
+        // Make the list
+        listElement = document.createElement('ul'),
+        // Set up a loop that goes through the items in listItems one at a time
+        numberOfListItems = data.length,
+        listItem,
+        i;
+
+
+
+
+    // Add it to the page
+    document.getElementsByTagName('body')[0].appendChild(listContainer);
+    listContainer.appendChild(listElement);
+
+    for (i = 0; i < numberOfListItems; ++i) {
+        // create an item for each one
+        listItem = document.createElement('li');
+
+        // Add the item text
+        listItem.innerHTML = data[i];
+
+        // Add listItem to the listElement
+        listElement.appendChild(listItem);
+    }
+}*/

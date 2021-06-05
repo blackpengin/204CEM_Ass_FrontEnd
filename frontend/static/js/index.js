@@ -63,11 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target.matches("[get]")) {
             e.preventDefault();
             navigateTo(e.target.href);
-            console.log('Button');
         }
     });
 
     router();
 });
-
-

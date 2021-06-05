@@ -18,7 +18,8 @@ export default class extends AbstractView {
                 <label for="password">Password:</label>
                 <input type="text" id="password" name="password"><br><br>
             </form>
-            <button onclick="Register()">Register</button>
+            <button onclick="Register()">Register</button><br><br>
+            <a href="/login" data-link>Login</a>
         `;
     }
 }

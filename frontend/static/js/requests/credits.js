@@ -1,6 +1,6 @@
 function POST_Credit() {
-    const owner = document.getElementById("owner").value;
-    const value = document.getElementById("value").value;
+    const owner = document.getElementById("add_owner").value;
+    const email = document.getElementById("add_email").value;
     let url = 'http://localhost:3000/api/credits';
 
     fetch(url, {
@@ -11,19 +11,24 @@ function POST_Credit() {
         },
         body: JSON.stringify({
             owner: owner,
-            value: value
+            email: email,
+            value: 0
         })
     }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail to add ' + owner)
+        } else {
+            alert(owner + ' Added.')
+            location.href = '/credits';
+        }
         return response.json();
-    }).then((jsonData) => {
-        console.log(jsonData);
     }).catch((err) => {
         console.log('Error:', err);
     })
 }
 
 function PUT_Credit() {
-    const owner = document.getElementById("owner").value;
+    const email = document.getElementById("email").value;
     const value = document.getElementById("value").value;
     let url = 'http://localhost:3000/api/credits/' + owner;
 
@@ -34,10 +39,16 @@ function PUT_Credit() {
             'auth-token': GetCookie('auth-token')
         },
         body: JSON.stringify({
-            owner: owner,
+            email: email,
             value: value
         })
     }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail to edit ' + owner)
+        } else {
+            alert(owner + ' Edited.')
+            location.href = '/credits';
+        }
         return response.json();
     }).then((jsonData) => {
         console.log(jsonData);
@@ -47,7 +58,7 @@ function PUT_Credit() {
 }
 
 function GET_Credit() {
-    const owner = document.getElementById("owner").value;
+    const owner = document.getElementById("searchCredit").value;
     let url = 'http://localhost:3000/api/credits/' + owner;
 
     fetch(url, {
@@ -57,9 +68,14 @@ function GET_Credit() {
             'auth-token': GetCookie('auth-token')
         }
     }).then((response) => {
+        if (response.status == 400) {
+            alert('Fail to Find ' + owner)
+        }
         return response.json();
     }).then((jsonData) => {
         console.log(jsonData);
+        const searchResult = document.getElementById('searchResult')
+        searchResult.innerHTML = jsonData.owner + ' : ' + jsonData.value + ' credits.';
     }).catch((err) => {
         console.log('Error:', err);
     })
@@ -82,24 +98,4 @@ function DELETE_Credit() {
     }).catch((err) => {
         console.log('Error:', err);
     })
-}
-
-function GetCookie(name) {
-    // Split cookie string and get all individual name=value pairs in an array
-    var cookieArr = document.cookie.split(";");
-
-    // Loop through the array elements
-    for (var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-
-        /* Removing whitespace at the beginning of the cookie name
-        and compare it with the given string */
-        if (name == cookiePair[0].trim()) {
-            // Decode the cookie value and return
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-
-    // Return null if not found
-    return null;
 }

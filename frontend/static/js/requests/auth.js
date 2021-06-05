@@ -21,10 +21,9 @@ function Register() {
             alert('Register Fail.');
         } else {
             alert('Register Success!');
+            location.href = '/login';
         }
         return response;
-    }).then((jsonData) => {
-        console.log(jsonData);
     }).catch((err) => {
         alert('Register Fail. ' + err);
         console.log('Error:', err);
@@ -51,20 +50,37 @@ function Login() {
             alert('Login Fail.');
         } else {
             alert('Login Success!');
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    document.cookie = "auth-token=" + text;
+                    console.log(document.cookie);
+                });
+            location.href = '/items';
         }
-
-        response.text()
-            .then(function (text) {
-                console.log(text);
-                document.cookie = "auth-token=" + text;
-                console.log(document.cookie);
-            });
         return response;
-    }).then((jsonData) => {
-        console.log(jsonData.body);
     }).catch((err) => {
         console.log('Error:', err);
         alert('Login Fail. ' + err);
     })
 }
 
+function Logout() {
+    document.cookie = "auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    location.href = '/';
+    ReloadPage();
+}
+
+function ReloadPage() {
+    if (GetCookie('auth-token') == null) {
+        document.getElementById("items").style.visibility = "hidden";
+        document.getElementById("receipts").style.visibility = "hidden";
+        document.getElementById("credits").style.visibility = "hidden";
+        document.getElementById("logout").style.visibility = "hidden";
+    } else {
+        document.getElementById("items").style.visibility = "visible";
+        document.getElementById("receipts").style.visibility = "visible";
+        document.getElementById("credits").style.visibility = "visible";
+        document.getElementById("logout").style.visibility = "visible";
+    }
+}
