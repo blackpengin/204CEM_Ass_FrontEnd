@@ -10,11 +10,13 @@ export default class extends AbstractView {
         return `
             <h1>758 Store System</h1>
             <p>
-                Please log in to start.
+                Please
+                <a href="/login" data-link>Login</a>
+                /
+                <a href="/register" data-link>Register</a>
+                 to start.
             </p>
-            <p>
-                <a href="/login" data-link>Login</a>.
-            </p>
+
         `;
     }
 }

@@ -11,16 +11,22 @@ function Register() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: 'Staff 5',
-            email: 'staff5@758store.com',
-            password: '555555'
+            name: name,
+            email: email,
+            password: password
         })
     }).then((response) => {
-        console.log(response);
+        console.log(response.status);
+        if (response.status == 400) {
+            alert('Register Fail.');
+        } else {
+            alert('Register Success!');
+        }
         return response;
     }).then((jsonData) => {
         console.log(jsonData);
     }).catch((err) => {
+        alert('Register Fail. ' + err);
         console.log('Error:', err);
     })
 }
@@ -41,11 +47,24 @@ function Login() {
             password: password
         })
     }).then((response) => {
-        console.log(response);
+        if (response.status == 400) {
+            alert('Login Fail.');
+        } else {
+            alert('Login Success!');
+        }
+
+        response.text()
+            .then(function (text) {
+                console.log(text);
+                document.cookie = "auth-token=" + text;
+                console.log(document.cookie);
+            });
         return response;
     }).then((jsonData) => {
-        console.log(jsonData);
+        console.log(jsonData.body);
     }).catch((err) => {
         console.log('Error:', err);
+        alert('Login Fail. ' + err);
     })
 }
+
