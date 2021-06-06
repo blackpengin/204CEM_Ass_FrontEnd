@@ -1,7 +1,6 @@
 import Dashboard from "./views/Dashboard.js";
 import Items from "./views/Items.js";
 import Login from "./views/Login.js";
-import Receipts from "./views/Receipts.js";
 import Credits from "./views/Credits.js";
 import Register from "./views/Register.js";
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
@@ -25,7 +24,6 @@ const router = async () => {
         { path: "/", view: Dashboard },
         { path: "/login", view: Login },
         { path: "/register", view: Register },
-        { path: "/receipts", view: Receipts },
         { path: "/credits", view: Credits },
         { path: "/items", view: Items }
     ];

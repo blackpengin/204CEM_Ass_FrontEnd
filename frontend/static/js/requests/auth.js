@@ -74,12 +74,10 @@ function Logout() {
 function ReloadPage() {
     if (GetCookie('auth-token') == null) {
         document.getElementById("items").style.visibility = "hidden";
-        document.getElementById("receipts").style.visibility = "hidden";
         document.getElementById("credits").style.visibility = "hidden";
         document.getElementById("logout").style.visibility = "hidden";
     } else {
         document.getElementById("items").style.visibility = "visible";
-        document.getElementById("receipts").style.visibility = "visible";
         document.getElementById("credits").style.visibility = "visible";
         document.getElementById("logout").style.visibility = "visible";
     }
