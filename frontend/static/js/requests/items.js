@@ -1,6 +1,6 @@
 function POST_Item() {
-    const name = document.getElementById("itemName").value;
-    const price = document.getElementById("itemPrice").value;
+    const name = document.getElementById("add_itemName").value;
+    const price = document.getElementById("add_itemPrice").value;
     let url = 'http://localhost:3000/api/items';
 
     fetch(url, {
@@ -15,9 +15,14 @@ function POST_Item() {
         })
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to add ' + name)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         } else {
             alert(name + ' Added.')
+            location.href = '/items';
         }
         return response;
     }).catch((err) => {
@@ -26,8 +31,12 @@ function POST_Item() {
 }
 
 function PUT_Item() {
-    const name = document.getElementById("itemName").value;
-    const price = document.getElementById("itemPrice").value;
+    const name = document.getElementById("edit_itemName").value;
+    const price = document.getElementById("edit_itemPrice").value;
+    if (name == '') {
+        alert('"name" is not allowed to be empty');
+        return;
+    }
     let url = 'http://localhost:3000/api/items/' + name;
 
     fetch(url, {
@@ -42,11 +51,16 @@ function PUT_Item() {
         })
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to edit ' + name)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         } else {
             alert(name + ' edited to $' + price)
+            location.href = '/items';
         }
-        return response.json();
+        return response;
     }).catch((err) => {
         console.log('Error:', err);
     })
@@ -75,25 +89,34 @@ function GET_Item() {
         }
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to search ' + name)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         }
         return response.json();
     }).then((jsonData) => {
         console.log(jsonData);
-        const data = jsonData.name + ' : $' + jsonData.price;
+        var data = jsonData.name + ' : $' + jsonData.price;
         var node = document.createElement('li');
         node.appendChild(document.createTextNode(data));
-
         document.querySelector('ul').appendChild(node);
 
-
+        var btn = 'Delete';
+        var node = document.createElement('button');
+        node.onclick = function () {
+            DELETE_Item();
+        }
+        node.appendChild(document.createTextNode(btn));
+        document.querySelector('ul').appendChild(node);
     }).catch((err) => {
         console.log('Error:', err);
     })
 }
 
 function DELETE_Item() {
-    const name = document.getElementById("itemName").value;
+    const name = document.getElementById("searchItem").value;
     let url = 'http://localhost:3000/api/items/' + name;
 
     fetch(url, {
@@ -104,11 +127,16 @@ function DELETE_Item() {
         }
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to delete ' + name)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         } else {
             alert(name + ' Deleted.')
+            location.href = '/items';
         }
-        return response.json();
+        return response;
     }).then((jsonData) => {
         console.log(jsonData);
     }).catch((err) => {

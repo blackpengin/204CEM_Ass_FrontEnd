@@ -16,7 +16,11 @@ function POST_Credit() {
         })
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to add ' + owner)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         } else {
             alert(owner + ' Added.')
             location.href = '/credits';
@@ -28,9 +32,14 @@ function POST_Credit() {
 }
 
 function PUT_Credit() {
+    const owner = document.getElementById("owner").value;
     const email = document.getElementById("email").value;
-    const value = document.getElementById("value").value;
-    let url = 'http://localhost:3000/api/credits/' + owner;
+    const value = document.getElementById("creditValue").value;
+    if (email == '') {
+        alert('"email" is not allowed to be empty');
+        return;
+    }
+    let url = 'http://localhost:3000/api/credits/' + email;
 
     fetch(url, {
         method: 'PUT',
@@ -39,14 +48,19 @@ function PUT_Credit() {
             'auth-token': GetCookie('auth-token')
         },
         body: JSON.stringify({
+            owner: owner,
             email: email,
             value: value
         })
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to edit ' + owner)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         } else {
-            alert(owner + ' Edited.')
+            alert(email + ' Edited.')
             location.href = '/credits';
         }
         return response.json();
@@ -59,6 +73,10 @@ function PUT_Credit() {
 
 function GET_Credit() {
     const owner = document.getElementById("searchCredit").value;
+    if (owner == '') {
+        alert('"email" is not allowed to be empty')
+        return;
+    }
     let url = 'http://localhost:3000/api/credits/' + owner;
 
     fetch(url, {
@@ -69,20 +87,32 @@ function GET_Credit() {
         }
     }).then((response) => {
         if (response.status == 400) {
-            alert('Fail to Find ' + owner)
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
         }
         return response.json();
     }).then((jsonData) => {
         console.log(jsonData);
         const searchResult = document.getElementById('searchResult')
-        searchResult.innerHTML = jsonData.owner + ' : ' + jsonData.value + ' credits.';
+        searchResult.innerHTML = jsonData.owner + ' : ' + jsonData.value + ' credits.<br>';
+
+        var btn = 'Delete Customer';
+        var node = document.createElement('button');
+        node.onclick = function () {
+            DELETE_Credit();
+        }
+        node.appendChild(document.createTextNode(btn));
+        searchResult.appendChild(node);
     }).catch((err) => {
         console.log('Error:', err);
     })
 }
 
 function DELETE_Credit() {
-    const owner = document.getElementById("owner").value;
+    const owner = document.getElementById("searchCredit").value;
     let url = 'http://localhost:3000/api/credits/' + owner;
 
     fetch(url, {
@@ -92,7 +122,17 @@ function DELETE_Credit() {
             'auth-token': GetCookie('auth-token')
         }
     }).then((response) => {
-        return response.json();
+        if (response.status == 400) {
+            response.text()
+                .then(function (text) {
+                    console.log(text);
+                    alert(text);
+                })
+        } else {
+            alert(email + ' Deleted.')
+            location.href = '/credits';
+        }
+        return response;
     }).then((jsonData) => {
         console.log(jsonData);
     }).catch((err) => {

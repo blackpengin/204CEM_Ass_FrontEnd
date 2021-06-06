@@ -11,7 +11,7 @@ export default class extends AbstractView {
         <h1>Credits</h1>
         <h2>Add Customer</h2>
         <form>
-            <label for="add_owner">Customer:</label>
+            <label for="add_owner">Owner:</label>
             <input type="text" id="add_owner" name="owner"><br><br>
             <label for="add_email">Email:</label>
             <input type="text" id="add_email" name="email"><br><br>
@@ -20,6 +20,8 @@ export default class extends AbstractView {
         
         <h2>Edit Credits</h2>
         <form>
+        <label for="owner">Owner:</label>
+            <input type="text" id="owner" name="owner"><br><br>
             <label for="email">Email:</label>
             <input type="text" id="email" name="email"><br><br>
             <label for="creditValue">Set Credit Value:</label>

@@ -12,13 +12,22 @@ export default class extends AbstractView {
         <h1>Items</h1>
             <h2>Add Item</h2>
             <form>
-                <label for="itemName">Item Name:</label>
-                <input type="text" id="itemName" name="itemName"><br><br>
-                <label for="itemPrice">Item Price:</label>
-                <input type="text" id="itemPrice" name="itemPrice"><br><br>
+                <label for="add_itemName">Item Name:</label>
+                <input type="text" id="add_itemName" name="itemName"><br><br>
+                <label for="add_itemPrice">Item Price:</label>
+                <input type="text" id="add_itemPrice" name="itemPrice"><br><br>
             </form>
             <button onclick="POST_Item()">Add Item</button><br><br>
             
+            <h2>Update Item</h2>
+            <form>
+                <label for="edit_itemName">Item Name:</label>
+                <input type="text" id="edit_itemName" name="itemName"><br><br>
+                <label for="edit_itemPrice">Item Price:</label>
+                <input type="text" id="edit_itemPrice" name="itemPrice"><br><br>
+            </form>
+            <button onclick="PUT_Item()">Edit Item</button><br><br>
+
             <h2>Price List</h2>
             <form>
                 <label for="searchItem">Search Item:</label>
