@@ -129,7 +129,7 @@ function DELETE_Credit() {
                     alert(text);
                 })
         } else {
-            alert(email + ' Deleted.')
+            alert(owner + ' Deleted.')
             location.href = '/credits';
         }
         return response;
